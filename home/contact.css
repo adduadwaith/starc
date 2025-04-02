@@ -1,0 +1,256 @@
+@font-face {
+    font-family: myfont;
+    src: url(Ethnocentric\ Rg.otf);
+}
+
+@font-face {
+    font-family: nexa;
+    src: url(Nexa-Heavy.ttf);
+}
+
+@font-face {
+    font-family: lemon;
+    src: url(LEMONMILK-Bold.otf);
+}
+
+@font-face {
+    font-family: cc;
+    src: url(Decaydence.otf);
+}
+
+@font-face {
+    font-family: abc;
+    src: url(Magnetar.otf);
+}
+
+@font-face {
+    font-family: def;
+    src: url(Game\ Of\ Squids.ttf);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: large;
+    padding: 20px;
+    background-color: black;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    left: 30;
+}
+
+.login-btn {
+    font-size: large;
+}
+
+nav a,
+.login-btn {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 90px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+    font-family: 'Orbitron', sans-serif;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 15px;
+}
+
+nav a:hover,
+.login-btn:hover {
+    text-decoration: none;
+}
+
+nav a::after,
+.login-btn::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: left 0.3s ease, right 0.3s ease;
+}
+
+nav a:hover::after,
+.login-btn:hover::after {
+    left: 0;
+    right: 0;
+}
+
+.contact-page {
+    padding: 40px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    margin-left: 11%;
+    width:78%;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.header-content {
+    flex: 1;
+    text-align: left;
+    padding-right: 120px;
+}
+
+.header-content h1 {
+    font-size: 3.8em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+}
+
+.header-content p {
+    font-size: 1.6em;
+    color: #555;
+    line-height: 1.7;
+}
+
+.header-image {
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 350px;
+    box-shadow: 0 15px 22px rgba(0, 0, 0, 0.25);
+}
+
+.contact-content-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.contact-form,
+.contact-info {
+    width: 48%;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+}
+
+.contact-form:hover,
+.contact-info:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.form-title,
+.info-title {
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.contact-info p {
+    line-height: 1.8;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.contact-info strong {
+    font-weight: 600;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #131313;
+    color: white;
+    width: 100%;
+    position: static;
+}

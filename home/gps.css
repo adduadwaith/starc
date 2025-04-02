@@ -1,0 +1,222 @@
+@font-face {
+    font-family: myfont;
+    src: url(Ethnocentric\ Rg.otf);
+}
+
+@font-face {
+    font-family: nexa;
+    src: url(Nexa-Heavy.ttf);
+}
+
+@font-face {
+    font-family: lemon;
+    src: url(LEMONMILK-Bold.otf);
+}
+
+@font-face {
+    font-family: cc;
+    src: url(Decaydence.otf);
+}
+
+@font-face {
+    font-family: abc;
+    src: url(Magnetar.otf);
+}
+
+@font-face {
+    font-family: def;
+    src: url(Game\ Of\ Squids.ttf);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: large;
+    padding: 20px;
+    background-color: black;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    left: 30;
+}
+
+.login-btn {
+    font-size: large;
+}
+
+nav a,
+.login-btn {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 90px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+    font-family: 'Orbitron', sans-serif;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 15px;
+}
+
+nav a:hover,
+.login-btn:hover {
+    text-decoration: none;
+}
+
+nav a::after,
+.login-btn::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: left 0.3s ease, right 0.3s ease;
+}
+
+nav a:hover::after,
+.login-btn:hover::after {
+    left: 0;
+    right: 0;
+}
+
+.gps-page {
+    padding: 40px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+.page-header-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    width: 80%;
+    max-width: 1300px;
+    box-shadow: 14px 15px 22px rgba(0, 0, 0, 0.25);
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.header-content {
+    flex: 1;
+    text-align: left;
+    padding-right: 120px;
+}
+
+.header-content h1 {
+    font-size: 3.8em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+}
+
+.header-content p {
+    font-size: 1.6em;
+    color: #555;
+    line-height: 1.7;
+}
+
+.header-image {
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 0;
+    box-shadow: 14px 15px 22px rgba(0, 0, 0, 0.25);
+}
+
+.feature-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 8px 10px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Full width for the map */
+    margin-bottom: 20px;
+}
+
+.feature-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 12px 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-details {
+    flex: 1;
+    text-align: left;
+}
+
+.feature-details h3 {
+    font-size: 1.8em;
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 600;
+}
+
+.feature-details p {
+    line-height: 1.6;
+    color: #555;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #131313;
+    color: white;
+    width: 100%;
+    position: static;
+}

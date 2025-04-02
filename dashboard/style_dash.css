@@ -1,0 +1,328 @@
+/* style.css - Enhanced Black & White Theme */
+
+/* --- Google Fonts Import (Optional but recommended for better typography) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap');
+
+body {
+    /* font-family: Arial, sans-serif; */ /* Old font */
+    font-family: 'Lato', sans-serif;    /* Modern sans-serif for body */
+    background-color: #f4f7f6; /* Slightly off-white background for subtle contrast */
+    color: #333333;          /* Dark grey text instead of pure black for readability */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+#map { height: 300px; width: 100%; }
+
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif; /* Modern sans-serif for headings */
+    color: #000000; /* Black headings for emphasis */
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+}
+
+/* --- Navigation Bar --- */
+nav.navbar {
+    background-color: #000000; /* Black background for nav */
+    color: #ffffff;          /* White text */
+    padding: 15px 30px;      /* Increased padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Shadow for depth */
+}
+
+nav.navbar .brand {
+    font-size: 1.7em; /* Slightly larger brand */
+    font-weight: 700; /* Bolder brand */
+    color: #ffffff; /* White brand text */
+    font-family: 'Poppins', sans-serif;
+}
+
+nav.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav.navbar ul li {
+    margin-left: 25px; /* Increased spacing */
+}
+
+nav.navbar ul li a {
+    text-decoration: none;
+    color: #ffffff; /* White links */
+    font-weight: 600; /* Slightly bolder links */
+    padding: 8px 15px; /* Adjusted padding */
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative; /* For potential future underlines/effects */
+}
+
+nav.navbar ul li a:hover,
+nav.navbar ul li a.active { /* Add 'active' class to current page link */
+    background-color: #333333; /* Dark grey background on hover/active */
+    color: #ffffff;
+}
+
+
+/* --- Main Content & Containers --- */
+main {
+    padding: 30px; /* More padding around main content */
+    max-width: 1200px; /* Limit max width for better readability on large screens */
+    margin: 20px auto; /* Center main content area */
+}
+
+.container {
+    background-color: #ffffff; /* White container background */
+    border: 1px solid #e0e0e0;
+    padding: 25px; /* Increased padding inside containers */
+    margin-bottom: 25px;
+    border-radius: 8px; /* Slightly more rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Softer, more pronounced shadow */
+}
+
+.container h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #eee; /* Slightly thicker border */
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 1.4em; /* Larger section titles */
+    font-weight: 600;
+    color: #1a1a1a; /* Very dark grey */
+}
+
+/* --- Forms & Inputs --- */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.form-group label {
+    font-weight: 600; /* Bolder labels */
+    margin-right: 5px;
+    min-width: 130px; /* Adjust as needed */
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    padding: 10px 15px; /* Larger padding */
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Match button radius */
+    flex-grow: 1;
+    max-width: 300px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1em;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus {
+    border-color: #333; /* Darker border on focus */
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.2); /* Subtle glow on focus */
+    outline: none;
+}
+
+
+button {
+    padding: 10px 20px; /* Larger buttons */
+    background-color: #000000; /* Black button */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px; /* Match input radius */
+    cursor: pointer;
+    font-weight: 600; /* Bolder text */
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #333333; /* Dark grey on hover */
+    transform: scale(1.03); /* Slight scale effect on hover */
+}
+
+/* --- Specific Sections --- */
+.realtime-display {
+    display: grid; /* Use grid for more control */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.realtime-display > div {
+    /* Removed flex: 1; as grid handles sizing */
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fdfdfd; /* Slightly different background */
+}
+
+.realtime-display h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+#map-container {
+    height: 350px; /* Increased height */
+    background-color: #e9ecef; /* Lighter grey placeholder */
+    border: 1px solid #ced4da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d; /* Muted text color */
+    text-align: center;
+    border-radius: 6px;
+    font-style: italic;
+}
+
+#current-speed, #current-location-text,
+#rider-speed, #rider-location-text {
+    font-size: 1.6em;
+    font-weight: 700; /* Bolder */
+    color: #000;
+    display: block; /* Ensure it takes its own line */
+    margin-top: 5px;
+}
+
+#current-location-text,
+#rider-location-text {
+    font-size: 0.9em; /* Smaller font size for coordinates */
+    font-weight: 400;
+    color: #555;
+}
+
+
+/* --- Alerts --- */
+.alert {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    display: flex; /* Align icon and text */
+    align-items: center;
+    font-weight: 600; /* Slightly bolder alert text */
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-icon {
+    font-size: 1.3em;
+    margin-right: 10px; /* Space between icon and text */
+}
+
+/* --- Lists (e.g., Admin Helmet List) --- */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-list li {
+    padding: 12px 5px; /* More padding */
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.item-list li:last-child {
+    border-bottom: none;
+}
+
+.item-list li:hover {
+    background-color: #f9f9f9; /* Subtle hover effect on list items */
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 768px) {
+    main {
+        padding: 15px; /* Less padding on mobile */
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        align-items: stretch; /* Make elements full width */
+        gap: 10px;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        min-width: auto;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    button {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    nav.navbar {
+        padding: 10px 15px;
+        flex-direction: column;
+        align-items: stretch; /* Stretch items */
+    }
+
+    nav.navbar .brand {
+        text-align: center; /* Center brand */
+        margin-bottom: 10px;
+    }
+
+    nav.navbar ul {
+        margin-top: 10px;
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    nav.navbar ul li {
+        margin-left: 0;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+     nav.navbar ul li a {
+        display: block;
+        text-align: center;
+        padding: 10px; /* Adjust padding for touch */
+     }
+
+
+     .realtime-display {
+        grid-template-columns: 1fr; /* Stack grid items */
+     }
+
+     #map-container {
+        height: 250px; /* Adjust map height */
+     }
+}

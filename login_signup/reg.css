@@ -1,0 +1,305 @@
+/* === register.css === */
+
+/* General Resets and Body Styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container - Using Flexbox for side-by-side panels */
+.login-container {
+    display: flex;
+    width: 850px;
+    max-width: 95%;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 700px;
+}
+
+/* Left Decorative Panel */
+.left-panel {
+    background-color: #000000;
+    color: #fff;
+    width: 45%;
+    padding: 80px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.left-panel .panel-content {
+    max-width: 300px;
+}
+
+.left-panel h2 {
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 2.2em; /* Increased font size */
+    background: linear-gradient(
+        to right,
+        #fc72ff,
+        #8f68ff,
+        #487bff,
+        #8f68ff,
+        #fc72ff
+    );
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animate-gradient 2.5s linear infinite;
+}
+
+.left-panel p {
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    font-weight: 700;
+}
+
+.left-panel img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    opacity: 0.85;
+}
+
+/* Right Signup Form Panel */
+.right-panel {
+    width: 55%;
+    padding: 80px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-panel h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Signup Form Styling */
+#register-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+#register-form input[type="text"],
+#register-form input[type="email"],
+#register-form input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
+    font-weight: 700;
+}
+
+#register-form input[type="text"]:focus,
+#register-form input[type="email"]:focus,
+#register-form input[type="password"]:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Role Selection Styling */
+.role-selection {
+    margin-bottom: 20px;
+}
+
+.role-selection label {
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.radio-group input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.radio-group .radio-label {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    color: #555;
+    font-weight: 700;
+}
+
+.radio-group input[type="radio"]:checked + .radio-label {
+    background-color: #000000;
+    color: #fff;
+    border-color: #000000;
+}
+
+.radio-group input[type="radio"]:focus + .radio-label {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Terms and Conditions Checkbox Styling */
+.terms-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 10px;
+}
+
+.terms-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    margin-top: -2px;
+    flex-shrink: 0;
+}
+
+.terms-group input[type="checkbox"]:checked {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.terms-group input[type="checkbox"]:checked::after {
+    content: '\2713';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+}
+
+.terms-group .checkbox-label {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.terms-group .checkbox-label a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.terms-group .checkbox-label a:hover {
+    text-decoration: underline;
+}
+
+/* Register Button Styling (Using same class name for consistency) */
+.login-button {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    background-color: #000000;
+}
+
+/* Links below button */
+.links {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.links a {
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 700;
+}
+
+.links a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.links p {
+    margin-top: 10px;
+    color: #555;
+    font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        width: 95%;
+        max-width: 450px;
+    }
+
+    .left-panel, .right-panel {
+        width: 100%;
+    }
+
+    .left-panel {
+        padding: 30px 20px;
+        min-height: 200px;
+    }
+
+    .right-panel {
+        padding: 40px 30px;
+    }
+}
+
+@keyframes animate-gradient {
+    to {
+        background-position: 200%;
+    }
+}

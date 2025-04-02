@@ -1,0 +1,272 @@
+/* speed.css */
+
+@font-face {
+    font-family: myfont;
+    src: url(Ethnocentric\ Rg.otf);
+}
+
+@font-face {
+    font-family: nexa;
+    src: url(Nexa-Heavy.ttf);
+}
+
+@font-face {
+    font-family: lemon;
+    src: url(LEMONMILK-Bold.otf);
+}
+
+@font-face {
+    font-family: cc;
+    src: url(Decaydence.otf);
+}
+
+@font-face {
+    font-family: abc;
+    src: url(Magnetar.otf);
+}
+
+@font-face {
+    font-family: def;
+    src: url(Game\ Of\ Squids.ttf);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Orbitron', sans-serif;
+}
+
+main {
+    flex: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: large;
+    padding: 20px;
+    background-color: black;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+}
+
+.login-btn {
+    font-size: large;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 15px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+nav a,
+.login-btn {
+    text-decoration: none;
+    color: #fff;
+    margin-left: 90px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+nav a:hover,
+.login-btn:hover {
+    text-decoration: none;
+}
+
+nav a::after,
+.login-btn::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: left 0.3s ease, right 0.3s ease;
+}
+
+nav a:hover::after,
+.login-btn:hover::after {
+    left: 0;
+    right: 0;
+}
+
+.speed-page {
+    padding: 40px;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+.page-header-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    width: 80%;
+    max-width: 1300px;
+    box-shadow: 14px 15px 22px rgba(0, 0, 0, 0.25);
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.header-content {
+    flex: 1;
+    text-align: left;
+    padding-right: 120px;
+}
+
+.header-content h1 {
+    font-size: 3.8em;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+}
+
+.header-content p {
+    font-size: 1.6em;
+    color: #555;
+    line-height: 1.7;
+}
+
+.header-image {
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 0;
+    box-shadow: 14px 15px 22px rgba(0, 0, 0, 0.25);
+}
+
+.speed-verification {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.speed-verification:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 25px rgba(160, 18, 18, 0.1);
+}
+
+.speed-verification h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.verify-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.speed-data {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+}
+
+.speed-data:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 25px rgba(160, 18, 18, 0.1);
+}
+
+.speed-data h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#speedDisplay p {
+    margin-bottom: 10px;
+}
+
+#speedometerCanvas {
+    display: block;
+    margin: 20px auto;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #131313;
+    color: white;
+    width: 100%;
+    position: static;
+}
