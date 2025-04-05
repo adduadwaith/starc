@@ -13,7 +13,7 @@ body {
     line-height: 1.6;
 }
 
-#map { height: 300px; width: 100%; }
+
 
 
 /* --- Headings --- */
@@ -174,11 +174,12 @@ button:hover {
     padding-bottom: 8px;
 }
 
+
 #map-container {
     height: 350px; /* Increased height */
     background-color: #e9ecef; /* Lighter grey placeholder */
     border: 1px solid #ced4da;
-    display: flex;
+   display: flex;
     align-items: center;
     justify-content: center;
     color: #6c757d; /* Muted text color */
@@ -186,6 +187,8 @@ button:hover {
     border-radius: 6px;
     font-style: italic;
 }
+
+#map { height: 300px; width: 100%; }
 
 #current-speed, #current-location-text,
 #rider-speed, #rider-location-text {

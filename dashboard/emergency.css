@@ -1,0 +1,59 @@
+/* Emergency Popup Styles */
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 420px;
+    z-index: 1000;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-title {
+    margin-bottom: 15px;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.popup-text {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.popup-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.whatsapp { background: green; color: white; }
+.whatsapp:hover { background: darkgreen; }
+
+.sms { background: blue; color: white; }
+.sms:hover { background: darkblue; }
+
+.email { background: red; color: white; }
+.email:hover { background: darkred; }
+
+.close { background: gray; color: white; margin-top: 10px; }
+.close:hover { background: black; }

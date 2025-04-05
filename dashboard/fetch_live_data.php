@@ -1,31 +1,41 @@
 <?php
-include '../connect.php'; // Ensure database connection
+session_start();
+include '../connect.php';
 
-if (!isset($_GET['helmet_id'])) {
-    echo json_encode(["error" => "Helmet ID required"]);
+$helmet_id = $_GET['helmet_id'] ?? '';
+$shared_code = $_GET['shared_code'] ?? '';
+$user_role = $_SESSION['role'] ?? '';
+
+if ($helmet_id === '') {
+    echo json_encode(["error" => "Invalid request."]);
     exit;
 }
 
-$helmet_id = $_GET['helmet_id'];
+// Allow admin to track any rider, skip access check
+if ($user_role === 'admin') {
+    $query = "SELECT * FROM helmet_live_data WHERE helmet_id = ?";
+} else {
+    $query = "SELECT h.* FROM helmet_live_data h
+              JOIN relatives r ON h.helmet_id = r.rider_id
+              WHERE r.shared_code = ? AND r.access_granted = TRUE";
+}
 
-// Fetch latest speed and location
-$query = "SELECT speed_val, latitude, longitude FROM helmet_live_data WHERE helmet_id = ? ORDER BY last_updated DESC LIMIT 1";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("s", $helmet_id);
+if ($user_role === 'admin') {
+    $stmt->bind_param("s", $helmet_id);
+} else {
+    $stmt->bind_param("s", $shared_code);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
 
 if ($data) {
-    echo json_encode([
-        "speed" => $data['speed_val'],
-        "latitude" => $data['latitude'],
-        "longitude" => $data['longitude']
-    ]);
+    echo json_encode($data);
 } else {
-    echo json_encode(["error" => "No live data found"]);
+    echo json_encode(["error" => "No tracking data found."]);
 }
 
-$stmt->close();
 $conn->close();
 ?>

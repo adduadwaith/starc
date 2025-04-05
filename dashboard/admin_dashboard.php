@@ -30,9 +30,6 @@ header("Pragma: no-cache");
     <nav class="navbar">
         <span class="brand">Smart Helmet</span>
         <ul>
-            <li><a href="admin_dashboard.php" class="active">Home</a></li>
-            <li><a href="admin_view_users.php">View Users</a></li>
-            <li><a href="admin_alerts.php">Alerts</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -47,6 +44,7 @@ header("Pragma: no-cache");
                 <button onclick="fetchRiderDetails()">Search</button>
             </div>
             <div id="rider-details"></div>
+           
         </div>
 
         <div class="container">
@@ -54,63 +52,97 @@ header("Pragma: no-cache");
             <div id="map" style="height: 400px;"></div>
         </div>
     </main>
+<script>
+    let map, marker;
 
-    <script>
-        let map, marker;
+    function fetchRiderDetails() {
+    const helmetID = document.getElementById("search_helmet_id").value;
 
-        function fetchRiderDetails() {
-    const helmetId = document.getElementById("search_helmet_id").value;
-    if (!helmetId) {
-        alert("Please enter a Helmet ID.");
-        return;
-    }
+    fetch("fetch_rider.php?helmet_id=" + helmetID)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("rider-details").innerHTML = `<p style="color:red;">${data.error}</p>`;
+            } else {
+                // Determine button text and action based on status
+                const isActive = data.status.toLowerCase() === "active";
+                const buttonText = isActive ? "Deactivate this helmet" : "Activate this helmet";
+                const actionFunc = isActive ? `deactivateHelmet(${data.helmet_id})` : `activateHelmet(${data.helmet_id})`;
 
-    $.ajax({
-        url: "fetch_rider.php",
-        type: "GET",
-        data: { helmet_id: helmetId },
-        dataType: "json",
-        success: function(response) {
-            if (response.error) {
-                document.getElementById("rider-details").innerHTML = `<p style='color:red;'>${response.error}</p>`;
-                return;
+                document.getElementById("rider-details").innerHTML = `
+                    <p><strong>Name:</strong> ${data.name}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                    <p><strong>Status:</strong> ${data.status}</p>
+                    <p><strong>Speed:</strong> ${data.speed} km/h</p>
+                    <p><strong>Location:</strong> ${data.latitude}, ${data.longitude}</p>
+                    <p><strong>Last Updated:</strong> ${data.last_updated}</p>
+                    <button onclick="${actionFunc}">${buttonText}</button>
+                `;
+                updateMap(data.latitude, data.longitude);
+
+
             }
+        })
+        .catch(error => {
+            console.error("Error fetching rider:", error);
+            document.getElementById("rider-details").innerHTML = `<p style="color:red;">Error fetching data</p>`;
+        });
+}
 
-            let detailsHtml = `
-                <p><strong>User ID:</strong> ${response.user_id}</p>
-                <p><strong>Name:</strong> ${response.name}</p>
-                <p><strong>Email:</strong> ${response.email}</p>
-                <p><strong>Helmet Status:</strong> ${response.status}</p>
-                <p><strong>Last Speed:</strong> ${response.speed} km/h</p>
-                <p><strong>Last Updated:</strong> ${response.last_updated}</p>
-            `;
-            document.getElementById("rider-details").innerHTML = detailsHtml;
 
-            updateMap(response.latitude, response.longitude);
-        },
-        error: function() {
-            document.getElementById("rider-details").innerHTML = "<p style='color:red;'>Error fetching data.</p>";
-        }
+
+function updateMap(lat, lon) {
+    if (!map) {
+        map = L.map('map').setView([lat, lon], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        marker = L.marker([lat, lon]).addTo(map);
+    } else {
+        marker.setLatLng([lat, lon]);
+        map.setView([lat, lon], 14, { animate: true });
+    }
+}
+
+// Auto-update every 5 seconds
+setInterval(fetchRiderDetails, 5000);
+
+function deactivateHelmet(helmetID) {
+    fetch("update_helmet_status.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ helmet_id: helmetID, status: "inactive" })
+    })
+    .then(res => res.json())
+    .then(response => {
+       
+        fetchRiderDetails(); // Refresh UI
+    })
+    .catch(err => {
+        console.error("Deactivation error:", err);
+      
+    });
+}
+
+function activateHelmet(helmetID) {
+    fetch("update_helmet_status.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ helmet_id: helmetID, status: "active" })
+    })
+    .then(res => res.json())
+    .then(response => {
+       
+        fetchRiderDetails(); // Refresh UI
+    })
+    .catch(err => {
+        console.error("Activation error:", err);
+      
     });
 }
 
 
-        function updateMap(lat, lon) {
-            if (!lat || !lon) {
-                alert("Location not available.");
-                return;
-            }
-
-            if (!map) {
-                map = L.map('map').setView([lat, lon], 14);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-                marker = L.marker([lat, lon]).addTo(map);
-            } else {
-                map.setView([lat, lon], 14);
-                marker.setLatLng([lat, lon]);
-            }
-        }
-    </script>
+</script>
 
 </body>
 </html>
