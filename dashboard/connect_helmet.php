@@ -14,11 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $checkHelmet->get_result();
 
         if ($result->num_rows > 0) {
-            // Update the rider's helmet_id
-            $updateHelmet = $conn->prepare("UPDATE user SET helmet_id = ? WHERE id = ?");
-            $updateHelmet->bind_param("si", $helmet_id, $rider_id);
-            if ($updateHelmet->execute()) {
-                echo "Helmet Connected Successfully!";
+            // Clear previous helmet connection (if any)
+            $clearPrevious = $conn->prepare("UPDATE helmet SET rider_id = NULL WHERE rider_id = ?");
+            $clearPrevious->bind_param("i", $rider_id);
+            $clearPrevious->execute();
+
+            // Connect new helmet to rider
+            $connectHelmet = $conn->prepare("UPDATE helmet SET rider_id = ? WHERE helmet_id = ?");
+            $connectHelmet->bind_param("is", $rider_id, $helmet_id);
+
+            if ($connectHelmet->execute()) {
+                echo "Helmet connected successfully!";
             } else {
                 echo "Error connecting helmet!";
             }

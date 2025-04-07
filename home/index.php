@@ -96,21 +96,21 @@ header("Pragma: no-cache");
             </h2>
             <div class="feature-box">
                 <div class="feature">
-                    <a href="speed.html">
+                    <a href="../login_signup/login.php">
                         <img src="img/sp.jpeg" alt="Speed Monitoring" class="feature-image">
                         <h3>Speed Monitoring</h3>
                         <p>Alerts when exceeding speed limits.</p>
                     </a>
                 </div>
                 <div class="feature">
-                    <a href="gps.html">
+                    <a href="../login_signup/login.php">
                         <img src="img/lo.jpeg" alt="GPS Tracking" class="feature-image">
                         <h3>GPS Tracking</h3>
                         <p>Real-time location sharing for emergencies.</p>
                     </a>
                 </div>
                 <div class="feature">
-                    <a href="iot.html">
+                    <a href="../login_signup/login.php">
                         <img src="img/io.jpeg" alt="IoT Integration" class="feature-image">
                         <h3>IoT Integration</h3>
                         <p>Connects with emergency services for quick assistance.</p>

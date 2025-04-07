@@ -1,20 +1,6 @@
 <?php
 session_start();
 include '../connect.php'; // Database connection
-
-// Check if user is logged in
-$isLoggedIn = isset($_SESSION['user_id']);
-$userName = "";
-
-// If logged in, retrieve the user's name
-if ($isLoggedIn) {
-    $stmt = $conn->prepare("SELECT name FROM user WHERE user_id = ?");
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $stmt->bind_result($userName);
-    $stmt->fetch();
-    $stmt->close();
-}
 ?>
 
 <!DOCTYPE html>
@@ -34,14 +20,7 @@ if ($isLoggedIn) {
             <a href="features.php">FEATURES</a>
             <a href="about.php">ABOUT</a>
             <a href="contact.php">CONTACT</a>
-
-            <!-- Dynamic Login/Logout Button -->
-            <?php if ($isLoggedIn): ?>
-                <a href="dashboard.php"><?php echo htmlspecialchars($userName); ?></a> <!-- Display user name -->
-                <a href="logout.php">LOGOUT</a> <!-- Logout option -->
-            <?php else: ?>
-                <a href="login.php">LOGIN</a>
-            <?php endif; ?>
+            <a href="../login_signup/login.php">LOGIN</a>
         </nav>
     </header>
     <main class="features-page">

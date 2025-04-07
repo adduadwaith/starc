@@ -20,7 +20,10 @@ $unique_code = $user_data['unique_code'] ?? 'N/A';
 $code_stmt->close();
 
 // Fetch connected helmet
-$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ?";
+//$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ?";
+// Fetch latest connected helmet
+$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ? ORDER BY created_at DESC LIMIT 1";
+
 $helmet_stmt = $conn->prepare($helmet_query);
 $helmet_stmt->bind_param("i", $user_id);
 $helmet_stmt->execute();
@@ -70,9 +73,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['helmet_id'])) {
             if ($helmet_status === 'inactive') {
                 $connect_msg = "This helmet is deactivated. Please contact support.";
             } else {
-                $connect_msg = "You are already connected to this helmet.";
+                // Update created_at to make this helmet the latest connected one
+                $update_query = "UPDATE helmet SET created_at = NOW() WHERE helmet_id = ?";
+                $update_stmt = $conn->prepare($update_query);
+                $update_stmt->bind_param("i", $helmet_id);
+                $update_stmt->execute();
+                $update_stmt->close();
+        
+                $connect_msg = "You are already connected to this helmet. Switched to its live data.";
             }
-        } else {
+        }
+        else {
             $connect_msg = "This helmet is already connected to another rider.";
         }
     } else {
@@ -95,7 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['helmet_id'])) {
 }
 
 // Fetch connected helmet data again
-$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ?";
+//$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ?";
+// Fetch latest connected helmet data again
+$helmet_query = "SELECT helmet_id, status, speed_limit FROM helmet WHERE rider_id = ? ORDER BY created_at DESC LIMIT 1";
+
 $helmet_stmt = $conn->prepare($helmet_query);
 $helmet_stmt->bind_param("i", $user_id);
 $helmet_stmt->execute();
@@ -196,19 +210,19 @@ $helmet_is_active = ($helmet && $helmet['status'] === 'active');
     </div>
     <?php endif; ?>
 </main>
-
-
-    <script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
     let map;
     let marker;
     let trackingInterval;
 
-    const helmetID = "<?php echo $helmet['helmet_id'] ?? ''; ?>";
+    let helmetID = "<?php echo $helmet['helmet_id'] ?? ''; ?>";
+
 
     // Initial coordinates from PHP (or fallback to 0,0)
     const initialLat = <?php echo $helmet_live_data['latitude'] ?? 0; ?>;
     const initialLon = <?php echo $helmet_live_data['longitude'] ?? 0; ?>;
-   
+
     // Initialize map
     map = L.map('map-container').setView([initialLat, initialLon], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -217,74 +231,69 @@ $helmet_is_active = ($helmet && $helmet['status'] === 'active');
 
     marker = L.marker([initialLat, initialLon]).addTo(map);
 
-    // Fetch data and update UI/map
+    // Fetch and update live data
     function updateLiveData() {
-    if (!helmetID) return;
+        if (!helmetID) return;
 
-    fetch("fetch_rider_rel.php?helmet_id=" + helmetID)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById("rider-speed").textContent = "--";
-                document.getElementById("lat").textContent = "--";
-                document.getElementById("lon").textContent = "--";
-                return;
-            }
+        fetch("connect_relative?helmet_id=" + helmetID + "&t=" + new Date().getTime())
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("rider-speed").textContent = "--";
+                    document.getElementById("lat").textContent = "--";
+                    document.getElementById("lon").textContent = "--";
+                    return;
+                }
 
-            // ✅ Only update the inner values, no " km/h" here!
-            document.getElementById("rider-speed").textContent = data.speed_val;
-            document.getElementById("lat").textContent = data.latitude;
-            document.getElementById("lon").textContent = data.longitude;
+                document.getElementById("rider-speed").textContent = data.speed_val;
+                document.getElementById("lat").textContent = data.latitude;
+                document.getElementById("lon").textContent = data.longitude;
 
-            let newLatLng = new L.LatLng(data.latitude, data.longitude);
-            marker.setLatLng(newLatLng);
-            map.setView(newLatLng, 15);
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-}
-
-
-
-function updateSpeedLimit() {
-    const speedLimit = document.getElementById('speed_limit').value;
-
-    if (speedLimit === '') {
-        document.getElementById('speed-limit-msg').textContent = 'Please enter a value';
-        return;
+                let newLatLng = new L.LatLng(data.latitude, data.longitude);
+                marker.setLatLng(newLatLng);
+                map.setView(newLatLng, 15);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
     }
 
-    fetch('update_speed_limit.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'speed_limit=' + encodeURIComponent(speedLimit),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('speed-limit-msg').textContent = 'Speed limit updated to ' + speedLimit + ' km/h';
+    // Update speed limit
+    window.updateSpeedLimit = function () {
+        const speedLimit = document.getElementById('speed_limit').value;
 
-            // Also update the Live Tracking section speed limit
-            const liveLimitDisplay = document.querySelector('#live-speed-limit');
-            if (liveLimitDisplay) {
-                liveLimitDisplay.textContent = speedLimit + ' km/h';
-            }
-
-        } else {
-            document.getElementById('speed-limit-msg').textContent = 'Failed to update';
+        if (speedLimit === '') {
+            document.getElementById('speed-limit-msg').textContent = 'Please enter a value';
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('speed-limit-msg').textContent = 'Error occurred';
-    });
-}
+
+        fetch('update_speed_limit.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'speed_limit=' + encodeURIComponent(speedLimit),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('speed-limit-msg').textContent = 'Speed limit updated to ' + speedLimit + ' km/h';
+                const liveLimitDisplay = document.querySelector('#live-speed-limit');
+                if (liveLimitDisplay) {
+                    liveLimitDisplay.textContent = speedLimit + ' km/h';
+                }
+            } else {
+                document.getElementById('speed-limit-msg').textContent = 'Failed to update';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('speed-limit-msg').textContent = 'Error occurred';
+        });
+    }
 
     // WhatsApp sharing
-    function shareViaWhatsApp() {
+    window.shareViaWhatsApp = function () {
         let code = document.getElementById("riderCode").value;
         let message = "Track my ride using this unique code: " + code + " on Smart Helmet Tracker.";
         let url = "https://wa.me/?text=" + encodeURIComponent(message);
@@ -292,7 +301,7 @@ function updateSpeedLimit() {
     }
 
     // Email sharing
-    function shareViaEmail() {
+    window.shareViaEmail = function () {
         let code = document.getElementById("riderCode").value;
         let subject = "Track My Ride - Smart Helmet";
         let body = "Hello,\n\nYou can track my helmet using this unique code: " + code + "\nVisit the tracking portal to enter the code.\n\nStay safe!";
@@ -300,19 +309,26 @@ function updateSpeedLimit() {
         window.open(url, "_blank");
     }
 
+    // Form validation (safe)
+    const riderForm = document.getElementById("riderForm");
+    if (riderForm) {
+        riderForm.addEventListener("submit", function (event) {
+            var helmetId = document.getElementById("helmet_id").value.trim();
+            var speedLimit = document.getElementById("speed_limit").value.trim();
 
-document.getElementById("riderForm").addEventListener("submit", function(event) {
-    var helmetId = document.getElementById("helmet_id").value.trim();
-    var speedLimit = document.getElementById("speed_limit").value.trim();
-
-    if (helmetId === "" || speedLimit === "") {
-        event.preventDefault(); // Stop form submission
-        alert("Please fill in all fields.");
+            if (helmetId === "" || speedLimit === "") {
+                event.preventDefault();
+                alert("Please fill in all fields.");
+            }
+        });
     }
+
+    // Start live data updates (every 5 seconds)
+    helmetID = document.getElementById("helmet_id").value;
+    updateLiveData();
+    trackingInterval = setInterval(updateLiveData, 5000);
 });
-
-
-
 </script>
+
 </body>
 </html>
